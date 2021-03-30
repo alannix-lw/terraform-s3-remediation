@@ -1,3 +1,9 @@
+variable "bucket_whitelist" {
+  type        = string
+  default     = ""
+  description = "A comma separated list of bucket names to whitelist from remediation"
+}
+
 variable "event_rule_name" {
   type        = string
   default     = ""

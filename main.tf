@@ -47,6 +47,12 @@ resource "aws_lambda_function" "s3_event_handler" {
   runtime = "python3.8"
 
   role = aws_iam_role.lambda_execution.arn
+
+  environment {
+    variables = {
+      S3_WHITELIST = var.bucket_whitelist
+    }
+  }
 }
 
 # Allow EventBridge to trigger the Lambda

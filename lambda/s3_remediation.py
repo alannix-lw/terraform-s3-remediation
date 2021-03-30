@@ -7,7 +7,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 # Whitelist that allows you to pick buckets you dont want to revoke public permissions
-WHITELIST = os.getenv('S3_WHITELIST', '').split(',')
+WHITELIST = os.getenv('S3_WHITELIST').split(',')
 
 
 def get_aws_account_id():
