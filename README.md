@@ -8,13 +8,15 @@ This module will implement a CloudWatch rule which triggers a Lambda function wh
 
 ## Inputs
 
-| Name                 | Description                                                          | Type     | Default          |
-| -------------------- | -------------------------------------------------------------------- | -------- | ---------------- |
-| bucket_whitelist     | A comma separated list of bucket names to whitelist from remediation | `string` | ""               |
-| event_rule_name      | The desired name of the CloudWatch event rule                        | `string` | ""               |
-| lambda_function_name | The desired name of the S3 remediation lambda function               | `string` | ""               |
-| lambda_role_name     | The desired IAM role name for the S3 remediation lambda function     | `string` | ""               |
-| resource_prefix      | The name prefix to use for resources provisioned by the module       | `string` | "s3-remediation" |
+| Name                 | Description                                                                  | Type          | Default          |
+| -------------------- | ---------------------------------------------------------------------------- | ------------- | ---------------- |
+| bucket_whitelist     | A comma separated list of bucket names to whitelist from remediation         | `string`      | ""               |
+| event_rule_name      | The desired name of the CloudWatch event rule                                | `string`      | ""               |
+| lambda_function_name | The desired name of the S3 remediation lambda function                       | `string`      | ""               |
+| lambda_role_name     | The desired IAM role name for the S3 remediation lambda function             | `string`      | ""               |
+| lambda_tracing_mode  | The desired tracing mode for the lambda function ("Active" or "PassThrough") | `string`      | "PassThrough"    |
+| resource_prefix      | The name prefix to use for resources provisioned by the module               | `string`      | "s3-remediation" |
+| tags                 | A map of tags to be assigned to created resources                            | `map(string)` | `{}`             |
 
 ## Outputs
 

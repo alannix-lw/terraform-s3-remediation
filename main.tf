@@ -12,7 +12,7 @@ resource "random_id" "uniq" {
 resource "aws_cloudwatch_event_rule" "s3_events" {
   name        = local.event_rule_name
   description = "A rule pertaining to S3 events that change ACLs or Bucket Policies"
-  # event_bus_name = aws_cloudwatch_event_bus.s3_events.name
+  tags        = var.tags
 
   event_pattern = <<EOF
 {
@@ -31,7 +31,6 @@ EOF
 
 # Set the EventBridge target as the Lambda function
 resource "aws_cloudwatch_event_target" "s3_events" {
-  # event_bus_name = aws_cloudwatch_event_bus.s3_events.name
   rule = aws_cloudwatch_event_rule.s3_events.name
   arn  = aws_lambda_function.s3_event_handler.arn
 }
@@ -47,11 +46,16 @@ resource "aws_lambda_function" "s3_event_handler" {
   runtime = "python3.8"
 
   role = aws_iam_role.lambda_execution.arn
+  tags = var.tags
 
   environment {
     variables = {
       S3_WHITELIST = var.bucket_whitelist
     }
+  }
+
+  tracing_config {
+    mode = var.lambda_tracing_mode
   }
 }
 
@@ -68,6 +72,7 @@ resource "aws_lambda_permission" "allow_cloudwatch" {
 # may access.
 resource "aws_iam_role" "lambda_execution" {
   name = local.lambda_role_name
+  tags = var.tags
 
   assume_role_policy = <<EOF
 {
@@ -128,6 +133,32 @@ resource "aws_iam_role_policy" "lambda_s3_policy" {
       "Effect": "Allow",
       "Resource": "*",
       "Sid": "LambdaAccessS3"
+    }
+  ]
+}
+EOF
+}
+
+# Allow the Lambda Function to perform active tracing
+resource "aws_iam_role_policy" "lambda_xray_policy" {
+  count = (var.lambda_tracing_mode == "Active") ? 1 : 0
+
+  name = "s3_remediation_xray_access"
+  role = aws_iam_role.lambda_execution.id
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "*"
+      ]
     }
   ]
 }
