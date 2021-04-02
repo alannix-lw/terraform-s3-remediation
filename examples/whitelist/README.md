@@ -5,7 +5,7 @@ This scenario deploys the necessary AWS configuration to automatically remediate
 ```hcl
 provider "aws" {}
 
-module "aws_config" {
+module "s3_remediation" {
   source = "github.com/alannix-lw/terraform-s3-remediation"
 
   bucket_whitelist = "example-bucket-name-1, example-bucket-name-2"
