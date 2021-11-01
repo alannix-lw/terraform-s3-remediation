@@ -1,5 +1,7 @@
 # S3 Public Access Remediation
 
+[![HIPAA](https://app.soluble.cloud/api/v1/public/badges/74e08c80-4614-4030-bd1d-e2aa006f7cbd.svg)](https://app.soluble.cloud/repos/details/github.com/alannix-lw/terraform-s3-remediation)  [![CIS](https://app.soluble.cloud/api/v1/public/badges/fc0cda5a-b51b-4973-9a41-eebfd42b33b6.svg)](https://app.soluble.cloud/repos/details/github.com/alannix-lw/terraform-s3-remediation)  [![IaC](https://app.soluble.cloud/api/v1/public/badges/ec7efc21-04b5-4e9e-ad59-c90014c2eed2.svg)](https://app.soluble.cloud/repos/details/github.com/alannix-lw/terraform-s3-remediation)  
+
 ## Description
 
 A Terraform Module to implement monitoring of 'PutBucketAcl' and 'PutBucketPolicy' API calls to validate that changes aren't publicly exposing S3 objects.
